@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"request": "/api/v4/main-account/create-new-address", "nonce": 1724488445777,
+    body: '{"request": "/api/v4/main-account/create-new-address", "nonce": 1724489528472,
       "nonceWindow": true, "ticker": "USDT", "network": "ERC20"}'
     headers:
       accept:
@@ -17,12 +17,8 @@ interactions:
       - whitebit.com
       user-agent:
       - python-httpx/0.27.0
-      x-txc-apikey:
-      - 0fecca9fb453757a3cfe9b348d7d313f
       x-txc-payload:
-      - eyJyZXF1ZXN0IjoiL2FwaS92NC9tYWluLWFjY291bnQvY3JlYXRlLW5ldy1hZGRyZXNzIiwibm9uY2UiOjE3MjQ0ODg0NDU3NzcsIm5vbmNlV2luZG93Ijp0cnVlLCJ0aWNrZXIiOiJVU0RUIiwibmV0d29yayI6IkVSQzIwIn0=
-      x-txc-signature:
-      - e908a6c14bb505e3a21e829aa2d4f98aa583edb8fd4fc5ae3fd0c86d18132a46f2a8526a70b7bfaf59346912dca57e5a172e176c2e48695ceeb6eb3ea69fd618
+      - eyJyZXF1ZXN0IjoiL2FwaS92NC9tYWluLWFjY291bnQvY3JlYXRlLW5ldy1hZGRyZXNzIiwibm9uY2UiOjE3MjQ0ODk1Mjg0NzIsIm5vbmNlV2luZG93Ijp0cnVlLCJ0aWNrZXIiOiJVU0RUIiwibmV0d29yayI6IkVSQzIwIn0=
     method: POST
     uri: https://whitebit.com/api/v4/main-account/create-new-address
   response:
@@ -35,7 +31,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 8b8200529f9d6433-LHR
+      - 8b821ac1bc37730c-LHR
       Cache-Control:
       - no-cache, private
       Connection:
@@ -47,12 +43,12 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 24 Aug 2024 08:34:05 GMT
+      - Sat, 24 Aug 2024 08:52:08 GMT
       Server:
       - cloudflare
       Set-Cookie:
-      - __cf_bm=lr7vzzE0uCo2iS6hDYw3hR_kNgAEs1kPlvhiANXWShs-1724488445-1.0.1.1-QvUe7xpMNQ319f8F7Axc.XvRMWPDsM2e6GLU3zFOqtfunUX9BVke5czd2PpLGD.x3xFMbn7pRuYULiUbqTDwlg;
-        path=/; expires=Sat, 24-Aug-24 09:04:05 GMT; domain=.whitebit.com; HttpOnly;
+      - __cf_bm=7Psyo8F_Lluc5fklrV2aoThY0Qncnkim_KQgK3T4dUo-1724489528-1.0.1.1-LZpJJsWXkW_pI6469GZXLOBXuSfWqSjcX.9KEZDNIpNBYbP2TSJQRPdyPhuOkRq1mhbvkKSwzBRkMQytJSjakQ;
+        path=/; expires=Sat, 24-Aug-24 09:22:08 GMT; domain=.whitebit.com; HttpOnly;
         Secure; SameSite=None
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload

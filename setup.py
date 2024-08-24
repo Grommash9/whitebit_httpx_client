@@ -15,7 +15,6 @@ extras_test = [
 ]
 
 
-
 setup(
     name="whitebit_httpx_client",
     keywords=[

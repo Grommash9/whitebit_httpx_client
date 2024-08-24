@@ -33,7 +33,14 @@ vcr_c = vcr.VCR(
     cassette_library_dir="tests/fixtures/cassettes",
     record_mode=os.environ.get("VCR_RECORD_MODE", "none"),
     match_on=["host", "path", "method", "query", "body"],
-    filter_headers=["Authorization", "Cookie", "Date", "X-API-Key"],
+    filter_headers=[
+        "Authorization",
+        "Cookie",
+        "Date",
+        "X-API-Key",
+        "x-txc-signature",
+        "x-txc-apikey",
+    ],
 )
 
 vcr_c.register_matcher("body", body_matcher)
