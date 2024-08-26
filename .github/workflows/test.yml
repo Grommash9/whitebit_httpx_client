@@ -1,5 +1,9 @@
 name: Test
 
+env:
+  WHITE_BIT_API_KEY: ${{ secrets.WHITE_BIT_API_KEY }}
+  WHITE_BIT_SECRET_KEY: ${{ secrets.WHITE_BIT_SECRET_KEY }}
+
 on:
   push:
     branches: [ "main" ]
