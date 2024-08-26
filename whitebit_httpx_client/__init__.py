@@ -41,7 +41,7 @@ class WhiteBITClient:
     def _handle_response(self, response: httpx.Response) -> Dict[str, Any]:
         if response.status_code != 200:
             raise httpx.HTTPStatusError(
-                f"Error connecting to Whitebit account: {response.text}",
+                f"Error connecting to Whitebit account status code: {response.status_code} text: {response.text}",
                 request=response.request,
                 response=response,
             )
@@ -81,4 +81,64 @@ class WhiteBITClient:
         request_path = "/api/v4/public/assets"
         async with httpx.AsyncClient() as client:
             response = await client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    def get_deposit_withdraw_history(
+        self,
+        transaction_method: int = None,
+        ticker: str = None,
+        address: str = None,
+        addresses: list = None,
+        unique_id: str = None,
+        limit: int = 100,
+        offset: int = 0,
+        status: list = None,
+    ) -> Dict[str, Any]:
+        request_path = "/api/v4/main-account/history"
+        data = self._prepare_request_data(
+            request_path,
+            transactionMethod=transaction_method,
+            ticker=ticker,
+            address=address,
+            addresses=addresses,
+            uniqueId=unique_id,
+            limit=limit,
+            offset=offset,
+            status=status,
+        )
+        headers = self.get_req_headers(data)
+        with httpx.Client() as client:
+            response = client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
+        return self._handle_response(response)
+
+    async def async_get_deposit_withdraw_history(
+        self,
+        transaction_method: int = None,
+        ticker: str = None,
+        address: str = None,
+        addresses: list = None,
+        unique_id: str = None,
+        limit: int = 50,
+        offset: int = 0,
+        status: list = None,
+    ) -> Dict[str, Any]:
+        request_path = "/api/v4/main-account/history"
+        data = self._prepare_request_data(
+            request_path,
+            transactionMethod=transaction_method,
+            ticker=ticker,
+            address=address,
+            addresses=addresses,
+            uniqueId=unique_id,
+            limit=limit,
+            offset=offset,
+            status=status,
+        )
+        headers = self.get_req_headers(data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
         return self._handle_response(response)
