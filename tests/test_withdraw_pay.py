@@ -13,6 +13,7 @@ def test_sync_withdraw_pay(white_bit_client: WhiteBITClient):
         "USDT", "NEAR", "5", CHOCK_WB_NEAR_USDT_ADDRESS, WITHDRAWAL_UUID
     )
 
+
 @vcr_c.use_cassette("withdraw/withdraw_pay.yaml")
 def test_async_withdraw_pay(white_bit_client: WhiteBITClient):
     _ = white_bit_client.async_withdraw_pay(
