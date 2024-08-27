@@ -3,8 +3,7 @@ import hashlib
 import hmac
 import json
 import time
-from typing import Any, Dict
-
+from typing import Any, Dict, Optional
 import httpx
 
 
@@ -39,7 +38,7 @@ class WhiteBITClient:
         return data
 
     def _handle_response(self, response: httpx.Response) -> Dict[str, Any]:
-        if response.status_code != 200:
+        if response.status_code not in [200, 201]:
             raise httpx.HTTPStatusError(
                 f"Error connecting to Whitebit account status code: {response.status_code} text: {response.text}",
                 request=response.request,
@@ -120,7 +119,7 @@ class WhiteBITClient:
         address: str = None,
         addresses: list = None,
         unique_id: str = None,
-        limit: int = 50,
+        limit: int = 100,
         offset: int = 0,
         status: list = None,
     ) -> Dict[str, Any]:
@@ -139,6 +138,60 @@ class WhiteBITClient:
         headers = self.get_req_headers(data)
         async with httpx.AsyncClient() as client:
             response = await client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
+        return self._handle_response(response)
+
+    async def async_withdraw_pay(
+        self,
+        ticker: str,
+        amount: str,
+        address: str,
+        unique_id: str,
+        network: str,
+        memo: Optional[str] = None,
+    ):
+        request_path = "/api/v4/main-account/withdraw-pay"
+
+        data = self._prepare_request_data(
+            request_path,
+            amount=amount,
+            ticker=ticker,
+            address=address,
+            memo=memo,
+            uniqueId=unique_id,
+            network=network,
+        )
+        headers = self.get_req_headers(data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
+        return self._handle_response(response)
+
+    def withdraw_pay(
+        self,
+        ticker: str,
+        network: str,
+        amount: str,
+        address: str,
+        unique_id: str,
+        memo: Optional[str] = None,
+    ):
+        request_path = "/api/v4/main-account/withdraw-pay"
+
+        data = self._prepare_request_data(
+            request_path,
+            amount=amount,
+            ticker=ticker,
+            address=address,
+            memo=memo,
+            uniqueId=unique_id,
+            network=network,
+        )
+        headers = self.get_req_headers(data)
+        with httpx.Client() as client:
+            response = client.post(
                 self.domain + request_path, json=data, headers=headers
             )
         return self._handle_response(response)
