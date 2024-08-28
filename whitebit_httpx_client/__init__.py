@@ -196,3 +196,15 @@ class WhiteBITClient:
                 self.domain + request_path, json=data, headers=headers
             )
         return self._handle_response(response)
+
+    def get_fee_data(self):
+        request_path = "/api/v4/public/fee"
+        with httpx.Client() as client:
+            response = client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    async def async_get_fee_data(self):
+        request_path = "/api/v4/public/fee"
+        async with httpx.AsyncClient() as client:
+            response = await client.get(self.domain + request_path)
+        return self._handle_response(response)
