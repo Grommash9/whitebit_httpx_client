@@ -149,7 +149,7 @@ class WhiteBITClient:
         amount: str,
         address: str,
         unique_id: str,
-        network: str,
+        network: Optional[str] = None,
         memo: Optional[str] = None,
     ):
         request_path = "/api/v4/main-account/withdraw-pay"
@@ -173,10 +173,10 @@ class WhiteBITClient:
     def withdraw_pay(
         self,
         ticker: str,
-        network: str,
         amount: str,
         address: str,
         unique_id: str,
+        network: Optional[str] = None,
         memo: Optional[str] = None,
     ):
         request_path = "/api/v4/main-account/withdraw-pay"
