@@ -31,7 +31,7 @@ def test_prepare_request_data(client):
         )
         assert data == {
             "request": "/test/path",
-            "nonce": 1000000,  # This is now correct: 1000000000000 // 1_000_000
+            "nonce": 1000000000000,
             "nonceWindow": True,
             "param1": "value1",
             "param2": "value2",
