@@ -32,7 +32,7 @@ class WhiteBITClient:
     def _prepare_request_data(self, request_path: str, **kwargs) -> Dict[str, Any]:
         data = {
             "request": request_path,
-            "nonce": time.time_ns(),
+            "nonce": time.time_ns() / 1_000_000,
             "nonceWindow": True,
         }
         data.update(kwargs)
