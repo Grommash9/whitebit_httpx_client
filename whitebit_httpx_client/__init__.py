@@ -4,7 +4,7 @@ import hmac
 import json
 import time
 from typing import Any, Dict, Optional
-
+import random
 import httpx
 
 
@@ -29,10 +29,13 @@ class WhiteBITClient:
             "X-TXC-SIGNATURE": signature,
         }
 
+    def _get_nonce(self) -> int:
+        return time.time_ns() / 1_000_000 + random.randint(1, 1000)
+
     def _prepare_request_data(self, request_path: str, **kwargs) -> Dict[str, Any]:
         data = {
             "request": request_path,
-            "nonce": time.time_ns() / 1_000_000,
+            "nonce": self._get_nonce(),
             "nonceWindow": True,
         }
         data.update(kwargs)
