@@ -31,7 +31,7 @@ class WhiteBITClient:
 
     def _get_nonce(self) -> int:
         return time.time_ns() / 1_000_000 + random.randint(1, 1000)
-    
+
     def _prepare_request_data(self, request_path: str, **kwargs) -> Dict[str, Any]:
         data = {
             "request": request_path,
