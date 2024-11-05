@@ -208,10 +208,3 @@ class WhiteBITClient:
         async with httpx.AsyncClient() as client:
             response = await client.get(self.domain + request_path)
         return self._handle_response(response)
-
-
-
-wb_client = WhiteBITClient("", "")
-
-deposits = wb_client.get_deposit_withdraw_history(transaction_method=1)
-print(deposits)
