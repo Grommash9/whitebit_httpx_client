@@ -25,13 +25,13 @@ def test_init(client):
 
 
 def test_prepare_request_data(client):
-    with patch("time.time_ns", return_value=1000000000000):
+    with patch.object(client, "_get_nonce", return_value=123):
         data = client._prepare_request_data(
             "/test/path", param1="value1", param2="value2"
         )
         assert data == {
             "request": "/test/path",
-            "nonce": 1000000000000,
+            "nonce": 123,
             "nonceWindow": True,
             "param1": "value1",
             "param2": "value2",
