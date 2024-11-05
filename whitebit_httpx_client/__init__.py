@@ -32,7 +32,7 @@ class WhiteBITClient:
     def _prepare_request_data(self, request_path: str, **kwargs) -> Dict[str, Any]:
         data = {
             "request": request_path,
-            "nonce": time.time_ns(),
+            "nonce": time.time_ns() / 1_000_000,
             "nonceWindow": True,
         }
         data.update(kwargs)
@@ -208,3 +208,10 @@ class WhiteBITClient:
         async with httpx.AsyncClient() as client:
             response = await client.get(self.domain + request_path)
         return self._handle_response(response)
+
+
+
+wb_client = WhiteBITClient("", "")
+
+deposits = wb_client.get_deposit_withdraw_history(transaction_method=1)
+print(deposits)
