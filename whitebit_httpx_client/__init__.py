@@ -211,3 +211,27 @@ class WhiteBITClient:
         async with httpx.AsyncClient() as client:
             response = await client.get(self.domain + request_path)
         return self._handle_response(response)
+
+    async def async_get_markets(self):
+        request_path = "/api/v4/public/markets"
+        async with httpx.AsyncClient() as client:
+            response = await client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    def get_markets(self):
+        request_path = "/api/v4/public/markets"
+        with httpx.Client() as client:
+            response = client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    async def async_get_tickers(self):
+        request_path = "/api/v4/public/ticker"
+        async with httpx.AsyncClient() as client:
+            response = await client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    def get_tickers(self):
+        request_path = "/api/v4/public/ticker"
+        with httpx.Client() as client:
+            response = client.get(self.domain + request_path)
+        return self._handle_response(response)
