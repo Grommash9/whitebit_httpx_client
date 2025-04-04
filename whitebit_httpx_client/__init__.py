@@ -3,7 +3,7 @@ import hashlib
 import hmac
 import json
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Literal, Union
 import random
 import httpx
 
@@ -234,4 +234,116 @@ class WhiteBITClient:
         request_path = "/api/v4/public/ticker"
         with httpx.Client() as client:
             response = client.get(self.domain + request_path)
+        return self._handle_response(response)
+
+    async def async_create_market_order(
+        self,
+        market: str,
+        side: Literal["buy", "sell"],
+        amount: Union[str, float],
+        client_order_id: Optional[str] = None,
+    ):
+        request_path = "/api/v4/order/market"
+        data = self._prepare_request_data(
+            request_path,
+            market=market,
+            side=side,
+            amount=amount,
+            clientOrderId=client_order_id,
+        )
+        headers = self.get_req_headers(data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.domain + request_path, headers=headers, json=data
+            )
+        return self._handle_response(response)
+
+    def create_market_order(
+        self,
+        market: str,
+        side: Literal["buy", "sell"],
+        amount: Union[str, float],
+        client_order_id: Optional[str] = None,
+    ):
+        request_path = "/api/v4/order/market"
+        data = self._prepare_request_data(
+            request_path,
+            market=market,
+            side=side,
+            amount=amount,
+            clientOrderId=client_order_id,
+        )
+        headers = self.get_req_headers(data)
+        with httpx.Client() as client:
+            response = client.post(
+                self.domain + request_path, headers=headers, json=data
+            )
+        return self._handle_response(response)
+
+    def move_founds(self, from_balance: str, to_balance: str, ticker: str, amount: str):
+        request_path = "/api/v4/main-account/transfer"
+        data = {
+            "nonce": self._get_nonce(),
+            "request": request_path,
+            "nonceWindow": True,
+            "from": from_balance,
+            "to": to_balance,
+            "ticker": ticker,
+            "amount": amount,
+        }
+        headers = self.get_req_headers(data)
+        with httpx.Client() as client:
+            response = client.post(
+                self.domain + request_path, headers=headers, json=data
+            )
+        return self._handle_response(response)
+
+    async def async_move_founds(
+        self, from_balance: str, to_balance: str, ticker: str, amount: str
+    ):
+        request_path = "/api/v4/main-account/transfer"
+        data = {
+            "nonce": self._get_nonce(),
+            "request": request_path,
+            "nonceWindow": True,
+            "from": from_balance,
+            "to": to_balance,
+            "ticker": ticker,
+            "amount": amount,
+        }
+        headers = self.get_req_headers(data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.domain + request_path, headers=headers, json=data
+            )
+        return self._handle_response(response)
+
+    def trade_balance(self) -> dict:
+        request_path = "/api/v4/trade-account/balance"
+
+        data = {
+            "nonce": self._get_nonce(),
+            "request": request_path,
+            "nonceWindow": True,
+        }
+        headers = self.get_req_headers(data)
+        with httpx.Client() as client:
+            response = client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
+        return self._handle_response(response)
+
+    async def async_trade_balance(self) -> dict:
+        request_path = "/api/v4/trade-account/balance"
+
+        data = {
+            "nonce": self._get_nonce(),
+            "request": request_path,
+            "nonceWindow": True,
+        }
+        headers = self.get_req_headers(data)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                self.domain + request_path, json=data, headers=headers
+            )
         return self._handle_response(response)
