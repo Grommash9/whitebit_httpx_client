@@ -8,3 +8,5 @@
 [![Ruff lint check](https://github.com/Grommash9/whitebit_httpx_client/actions/workflows/lint-check.yml/badge.svg)](https://github.com/Grommash9/whitebit_httpx_client/actions/workflows/lint-check.yml)
 
 whitebit_httpx_client is a white bit https clinet
+
+<!-- Security scan triggered at 2025-09-02 05:22:10 -->
